@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function App() {
     const man = [
@@ -9,11 +9,24 @@ function App() {
         { name: 'shiku', age: 12 },
     ]
 
+    const [userData, setuserData] = useState([])
+
+    useEffect(() => {
+        fetch('https://jsonplaceholder.typicode.com/users')
+            .then((res) => res.json())
+            .then((data) => setuserData(data))
+    }, [])
+
     return (
         <div className="App">
             <header className="App-header">
                 <h1>Hello Akfa..!</h1>
             </header>
+
+
+            {userData.map((m) => (
+                <Nayok name={m.name} key={m.id} age={m.company.name}></Nayok>
+            ))}
 
             <Nayok name={man[0].name} age={man[0].age}></Nayok>
 
@@ -21,6 +34,7 @@ function App() {
             {man.map((m) => (
                 <Nayok name={m.name} age={m.age}></Nayok>
             ))}
+            
         </div>
     )
 }
